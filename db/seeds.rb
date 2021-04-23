@@ -1,7 +1,80 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+puts "Cleaning DB"
+User.destroy_all
+Event.destroy_all
+Timeslot.destroy_all
+Band.destroy_all
+Venue.destroy_all
+
+puts "Creating 2 users"
+
+user1 = User.new(username: "Brieuc",
+                 email: "brieuc@gmail.com",
+                 password: "123456")
+user1.save!
+
+user2 = User.new(username: "Nicolas",
+                 email: "nicolas@gmail.com",
+                 password: "123456")
+user2.save!
+
+puts "2 users created"
+puts "Creating 2 venues"
+
+venue1 = Venue.new(name: "Magasin 4",
+                   address: "Avenue du Port 51B, 1000 Bruxelles, Belgium")
+venue1.save!
+
+venue2 = Venue.new(name: "SO36",
+                   address: "Oranienstraße 190, 10999 Berlin")
+venue2.save!
+
+puts "2 venues created"
+puts "Creating 4 bands"
+
+band1 = Band.new(name: "The Slackers")
+band1.save!
+
+band2 = Band.new(name: "The Pigeons")
+band2.save!
+
+band3 = Band.new(name: "The Aggrolites")
+band3.save!
+
+band4 = Band.new(name: "Crazy Baldhead")
+band4.save!
+
+puts "4 bands created"
+puts "Creating 4 event"
+
+event1 = Event.new(date: '2021-06-24',
+                   price: '20',
+                   venue: venue1,
+                   user: user1)
+event1.save!
+
+event2 = Event.new(date: '2021-06-27',
+                   price: '26',
+                   venue: venue2,
+                   user: user2)
+event2.save!
+
+puts "2 events created"
+puts "Creating 4 time slot"
+
+ts1 = Timeslot.new(band: band1,
+                   event: event1)
+ts1.save!
+
+ts2 = Timeslot.new(band: band2,
+                   event: event1)
+ts2.save!
+
+ts3 = Timeslot.new(band: band3,
+                   event: event2)
+ts3.save!
+
+ts4 = Timeslot.new(band: band4,
+                   event: event2)
+ts4.save!
+
+puts "4 time slot created"
