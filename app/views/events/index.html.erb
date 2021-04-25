@@ -1,3 +1,12 @@
 <div class="container">
-
+   <% @events.each do |event| %>
+    <ul>
+      <li><%= event.date %></li>
+      <li><%= event.price %> Euros</li>
+      <li><%= event.venue.name %> - <%= event.venue.address %></li>
+      <% event.bands.each do |band| %>
+        <li><%= band.name %> </li>
+      <% end %>
+    </ul>
+   <% end %>
 </div>
