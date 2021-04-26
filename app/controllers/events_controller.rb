@@ -2,8 +2,15 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
-    @events.each do |event|
-      event.timeslots
-    end
+  end
+
+  def new
+    @event = Event.new
+    @venue = Venue.new
+    @event.bands.build
+  end
+
+  def create
+    @event = Event.new(event_params)
   end
 end
