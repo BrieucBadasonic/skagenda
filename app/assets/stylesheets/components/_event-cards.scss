@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   margin-top: 32px;
+  transition: 0.3s;
 }
 
 .card-product img {
@@ -30,4 +31,8 @@
 
 .card-product .card-product-infos {
   padding: 16px;
+}
+
+.card-product:hover {
+  transform: scale(1.05);
 }
