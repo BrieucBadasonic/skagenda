@@ -22,7 +22,6 @@ skip_before_action :authenticate_user!, only: [ :index ]
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
     @event.venue = @venue
-    @event.save!
 
     event_params[:bands_attributes].each do |band|
       @ts = Timeslot.new
@@ -35,6 +34,12 @@ skip_before_action :authenticate_user!, only: [ :index ]
       end
       @ts.band = @band
       @ts.save!
+    end
+
+    if @event.save
+      redirect_to events_path
+    else
+      render :new
     end
   end
 
