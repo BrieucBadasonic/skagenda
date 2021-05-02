@@ -4,19 +4,20 @@
     <%= f.input :price %>
    <!--  <%= f.association :venue %> -->
 
-      <%= f.simple_fields_for :venues do |event_venue| %>
-        <%= event_venue.input :name, label: "Venue name" %>
-        <%= event_venue.input :address, label: "Venue address" %>
-      <% end %>
+    <%= f.simple_fields_for :venues do |event_venue| %>
+      <%= event_venue.input :name, label: "Venue name" %>
+      <%= event_venue.input :address, label: "Venue address" %>
+    <% end %>
 
-      <%= f.simple_fields_for :bands do |event_band| %>
+    <%= f.simple_fields_for :bands do |event_band| %>
       <div id="fieldsetContainer">
-        <fieldset id="0">
-          <%= event_band.input :name, label: "Band name", permitted: true %>
-        <% end %>
-        </fieldset>
+      <fieldset id="0">
+        <%= event_band.input :name, label: "Band name", permitted: true %>
+      <% end %>
+      </fieldset>
+    <%= f.input :photo, as: :file %>
       </div>
     <%= f.submit "Add Concert" %>
   <% end %>
-  <button id="addBand">Add another band</button>
+    <button id="addBand">Add another band</button>
 </div>

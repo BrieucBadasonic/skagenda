@@ -1,7 +1,9 @@
 <div class="container">
   <% @events.each do |event| %>
     <div class="card-product">
-      <%= cl_image_tag event.photo.key, height: 400, width: 300  %>
+      <% if event.photo.attached? %>
+        <%= cl_image_tag(event.photo.key)  %>
+      <% end %>
       <div class="card-product-infos">
         <% event.bands.each do |band| %>
          <h2><%= band.name %> </h2>

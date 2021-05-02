@@ -19,7 +19,7 @@ skip_before_action :authenticate_user!, only: [ :index ]
       @venue = Venue.where(name: event_params[:venues][:name])[0]
     end
 
-    @event = Event.new(date: event_params[:date], price: event_params[:price])
+    @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
     @event.venue = @venue
     @event.save!
@@ -41,8 +41,6 @@ skip_before_action :authenticate_user!, only: [ :index ]
   private
 
   def event_params
-    params.require(:event).permit(:date, :price, venues: [:name, :address], bands_attributes: [:name])
+    params.require(:event).permit(:date, :price, :photo, venues: [:name, :address], bands_attributes: [:name])
   end
 end
-# , :bands_attributes[:name]
-# params[:event][:bands_attributes].keys.count
