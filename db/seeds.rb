@@ -1,3 +1,5 @@
+require "open-uri"
+
 puts "Cleaning DB"
 User.destroy_all
 Event.destroy_all
@@ -44,19 +46,23 @@ band4 = Band.new(name: "Crazy Baldhead")
 band4.save!
 
 puts "4 bands created"
-puts "Creating 4 event"
+puts "Creating 2 events"
 
 event1 = Event.new(date: '2021-06-24',
                    price: '20',
                    venue: venue1,
                    user: user1)
 event1.save!
+file = URI.open('https://res.cloudinary.com/duogrvvdx/image/upload/v1619952376/moonstomp%20agenda/seed/test1_bbjnbo.jpg')
+event1.photo.attach(io: file, filename: 'event.jpg', content_type: 'image/jpg')
 
 event2 = Event.new(date: '2021-06-27',
                    price: '26',
                    venue: venue2,
                    user: user2)
 event2.save!
+file = URI.open('https://res.cloudinary.com/duogrvvdx/image/upload/v1619952366/moonstomp%20agenda/seed/test2_flyqbd.jpg')
+event2.photo.attach(io: file, filename: 'event.jpg', content_type: 'image/jpg')
 
 puts "2 events created"
 puts "Creating 4 time slot"
