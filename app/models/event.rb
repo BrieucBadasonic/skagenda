@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :venue
   belongs_to :user
-  has_many :timeslots
+  has_many :timeslots, dependent: :destroy
   has_many :bands, through: :timeslots
   has_one_attached :photo
 

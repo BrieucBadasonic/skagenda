@@ -12,6 +12,7 @@ puts "Creating 2 users"
 user1 = User.new(username: "Brieuc",
                  email: "brieuc@gmail.com",
                  password: "123456")
+user1.admin = true
 user1.save!
 
 user2 = User.new(username: "Nicolas",

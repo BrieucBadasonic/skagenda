@@ -1,7 +1,8 @@
 class EventsController < ApplicationController
-skip_before_action :authenticate_user!, only: [ :index ]
+  skip_before_action :authenticate_user!, only: [:index]
+  before_action :skip_authorization, only: :index
   def index
-    @events = Event.all
+    @events = policy_scope(Event)
   end
 
   def new
@@ -15,6 +16,7 @@ skip_before_action :authenticate_user!, only: [ :index ]
   def create
     if Venue.where(name: event_params[:venues][:name]).empty?
       @venue = Venue.new(event_params[:venues])
+      authorize @venue
       @venue.save!
     else
       @venue = Venue.where(name: event_params[:venues][:name])[0]
@@ -34,14 +36,40 @@ skip_before_action :authenticate_user!, only: [ :index ]
         @band = Band.where(name: band[1][:name])[0]
       end
       @ts.band = @band
+      authorize @ts
       @ts.save!
     end
 
+    authorize @event
     if @event.save
       redirect_to events_path
     else
       render :new
     end
+  end
+
+  def edit
+    @event = Event.find(params[:id])
+    @venue = @event.venue
+    authorize @event
+    authorize @venue
+  end
+
+  def update
+    @event = Event.find(params[:id])
+    authorize @event
+    if @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
+      redirect_to events_path, notice: "Event was successfully updated"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @event = Event.find(params[:id])
+    authorize @event
+    @event.destroy
+    redirect_to events_path, notice: "Event was successfully deleted"
   end
 
   private

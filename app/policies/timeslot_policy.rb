@@ -1,4 +1,4 @@
-class VenuePolicy < ApplicationPolicy
+class TimeslotPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
@@ -6,10 +6,6 @@ class VenuePolicy < ApplicationPolicy
   end
 
   def create?
-    true
-  end
-
-  def update?
     true
   end
 end
