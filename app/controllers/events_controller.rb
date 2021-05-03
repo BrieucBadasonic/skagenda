@@ -6,8 +6,9 @@ skip_before_action :authenticate_user!, only: [ :index ]
 
   def new
     @event = Event.new
+    authorize @event
     @venue = Venue.new
-    # @event.venue.build
+    authorize @venue
     @event.bands.build
   end
 
