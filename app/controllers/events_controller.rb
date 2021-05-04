@@ -1,3 +1,5 @@
+require 'pry-byebug'
+
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
   before_action :skip_authorization, only: :index
@@ -50,7 +52,8 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
-    @venue = @event.venue
+    @venue = Venue.find(params[:venue_id])
+
     authorize @event
     authorize @venue
   end
@@ -58,10 +61,15 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     authorize @event
-    if @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
-      redirect_to events_path, notice: "Event was successfully updated"
+
+    if params[:event].has_key?("photo")
+      if @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
+        redirect_to events_path, notice: "Event was successfully updated"
+      end
     else
-      render :edit
+      if @event.update(date: event_params[:date], price: event_params[:price])
+        redirect_to events_path, notice: "Event was successfully updated"
+      end
     end
   end
 

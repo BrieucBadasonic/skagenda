@@ -12,7 +12,7 @@
         <p><%= event.date %> - <%= event.price %> Euros</p>
         <% if user_signed_in? %>
           <% if policy(event).edit? %>
-            <%= link_to "Edit event", edit_event_path(event) %> -
+            <%= link_to "Edit event", edit_venue_event_path(event, event.venue) %> -
             <%= link_to "Delete event",
                         event_path(event),
                         method: :delete,
