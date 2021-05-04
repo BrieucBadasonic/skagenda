@@ -1,4 +1,4 @@
-require 'pry-byebug'
+
 
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
