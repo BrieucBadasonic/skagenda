@@ -18,6 +18,7 @@ user1.save!
 user2 = User.new(username: "Nicolas",
                  email: "nicolas@gmail.com",
                  password: "123456")
+# user2.admin = true
 user2.save!
 
 puts "2 users created"
