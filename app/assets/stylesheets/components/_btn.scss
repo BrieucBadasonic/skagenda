@@ -3,7 +3,7 @@
   padding: 8px 24px;
   text-align: center;
   display: inline-block;
-  text-decoration: none;
+  text-decoration: none !important;
   width: 230px;
   font-size: 24px;
   border: 2px solid white;
@@ -34,6 +34,7 @@
   border-radius: 8px;
   background-color: black;
   transition: 0.3s;
+  text-decoration: none !important;
 }
 
 .btn-event-card:hover {
