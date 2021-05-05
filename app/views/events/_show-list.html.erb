@@ -1,0 +1,27 @@
+<div class="card-product">
+  <% if event.photo.attached? %>
+    <%= cl_image_tag(event.photo.key)  %>
+  <% end %>
+  <div class="card-product-infos">
+    <% event.bands.each do |band| %>
+     <h2><%= band.name %> </h2>
+    <% end %>
+    <p><%= event.venue.name %> - <%= event.venue.address %></p>
+    <p><%= event.date %> - <%= event.price %> Euros</p>
+    <% if user_signed_in? %>
+      <% if policy(event).edit? %>
+        <%= link_to "Edit event", edit_venue_event_path(event, event.venue) %> -
+        <%= link_to "Delete event",
+                    event_path(event),
+                    method: :delete,
+                    data: { confirm: "Are you sure?"} %>
+      <% end %>
+      <% if policy(event).confirmation? && !event.confirm %>
+        <%= simple_form_for event, :url => [:confirmed, event], html: { method: :put } do |f| %>
+          <%= f.hidden_field :comfirm, :value => true %>
+          <%= f.submit "confirm event" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

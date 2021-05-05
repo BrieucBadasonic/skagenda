@@ -7,4 +7,8 @@ class Event < ApplicationRecord
 
   accepts_nested_attributes_for :venue
   accepts_nested_attributes_for :bands
+
+  def confirm?
+    confirm
+  end
 end

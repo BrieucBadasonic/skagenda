@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_092035) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "comfirm", default: false
+    t.boolean "confirm", default: false
     t.index ["user_id"], name: "index_events_on_user_id"
     t.index ["venue_id"], name: "index_events_on_venue_id"
   end

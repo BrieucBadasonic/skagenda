@@ -1,5 +1,5 @@
 class AddConfirmToEvent < ActiveRecord::Migration[6.0]
   def change
-    add_column :events, :comfirm, :boolean, default: false
+    add_column :events, :confirm, :boolean, default: false
   end
 end

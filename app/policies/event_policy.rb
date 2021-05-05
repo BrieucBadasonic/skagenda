@@ -20,4 +20,12 @@ class EventPolicy < ApplicationPolicy
   def destroy?
     record.user == user || user.admin
   end
+
+  def confirmation?
+    user.admin
+  end
+
+  def confirmed?
+    user.admin
+  end
 end

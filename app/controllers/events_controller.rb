@@ -3,9 +3,20 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
   before_action :skip_authorization, only: :index
-  before_action :find_event, only: [:edit, :update, :destroy]
+  before_action :find_event, only: [:edit, :update, :destroy, :confirmed]
   def index
     @events = policy_scope(Event).where('date > ?' ,Time.now.to_date).order(date: :asc)
+  end
+
+  def confirmation
+    @events = policy_scope(Event).where('date > ?' ,Time.now.to_date).order(date: :asc)
+    authorize @events
+  end
+
+  def confirmed
+    @event.confirm = true
+    @event.save
+    redirect_to confirmation_events_path, notice: "Event was successfully confirmed"
   end
 
   def new
@@ -63,8 +74,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    authorize @event
-
     # check if there is a new phot in the params
     # update with the new photo or keep the old one if there is no new one
     if params[:event].has_key?("photo")
@@ -78,7 +87,6 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    authorize @event
     @event.destroy
     redirect_to events_path, notice: "Event was successfully deleted"
   end
@@ -91,5 +99,6 @@ class EventsController < ApplicationController
 
   def find_event
     @event = Event.find(params[:id])
+    authorize @event
   end
 end

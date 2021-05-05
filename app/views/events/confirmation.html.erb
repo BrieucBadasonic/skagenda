@@ -1,12 +1,8 @@
 <div class="container">
+  <h1>Confirm the events</h1>
   <% @events.each do |event| %>
-    <% if event.confirm? %>
+    <% unless event.confirm? %>
       <%= render partial: "show-list", locals: {event: event}  %>
     <% end %>
   <% end %>
 </div>
-
-
-
-
-
