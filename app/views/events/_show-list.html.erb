@@ -15,7 +15,7 @@
       <% if user_signed_in? %>
         <% if policy(event).edit? %>
           <div>
-            <%= link_to "Edit event", edit_venue_event_path(event, event.venue),
+            <%= link_to "Edit event", edit_venue_event_path(event.venue, event),
                         class: "btn-event-card" %>
           </div>
           <div>

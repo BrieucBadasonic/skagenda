@@ -5,11 +5,11 @@ class EventsController < ApplicationController
   before_action :skip_authorization, only: :index
   before_action :find_event, only: [:edit, :update, :destroy, :confirmed]
   def index
-    @events = policy_scope(Event).where('date > ?' ,Time.now.to_date).order(date: :asc)
+    @events = policy_scope(Event).where('date > ?', Time.now.to_date).order(date: :asc)
   end
 
   def confirmation
-    @events = policy_scope(Event).where('date > ?' ,Time.now.to_date).order(date: :asc)
+    @events = policy_scope(Event).where('date > ?', Time.now.to_date).order(date: :asc)
     authorize @events
   end
 
@@ -69,7 +69,6 @@ class EventsController < ApplicationController
 
   def edit
     @venue = Venue.find(params[:venue_id])
-    authorize @event
     authorize @venue
   end
 
