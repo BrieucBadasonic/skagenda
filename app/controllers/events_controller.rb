@@ -76,6 +76,7 @@ class EventsController < ApplicationController
     # check if there is a new phot in the params
     # update with the new photo or keep the old one if there is no new one
     update_venue
+    update_bands
     if params[:event].has_key?("photo")
       @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     else
@@ -111,5 +112,9 @@ class EventsController < ApplicationController
       end
       @event.venue = @venue
     end
+  end
+
+  def update_bands
+
   end
 end

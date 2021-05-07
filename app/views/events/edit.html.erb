@@ -10,12 +10,10 @@
     <%= event_venue.input :address, label: "Venue address" %>
   <% end %>
 
-  <div class="fieldsetcontainer">
+  <div id="fieldsetEditContainer">
     <% @event.bands.each_with_index do |band, index| %>
       <%= f.simple_fields_for band do |band| %>
-        <fieldset id="<%= index %>">
-          <%= band.input :name, label: "Band name", permitted: true %>
-        </fieldset>
+        <%= band.input :name, label: "Band name", input_html: { :id => index }, permitted: true %>
       <% end %>
     <% end %>
   </div>

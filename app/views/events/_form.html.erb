@@ -10,11 +10,11 @@
 
   <%= f.simple_fields_for :bands do |event_band| %>
     <div id="fieldsetContainer">
-    <fieldset id="0">
-      <%= event_band.input :name, label: "Band name", permitted: true %>
-    <% end %>
-    </fieldset>
+      <fieldset id="0">
+        <%= event_band.input :name, label: "Band name", permitted: true %>
+      </fieldset>
     </div>
+  <% end %>
   <%= f.input :photo, as: :file %>
   <%= f.submit "Add Concert" %>
 <% end %>

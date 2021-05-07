@@ -25,6 +25,7 @@ require("channels")
 // External imports
 import "bootstrap";
 import { addBand } from './addBand'
+import { editBand } from './editBand'
 import { initFlatpickr } from "../plugins/flatpickr";
 
 // Internal imports, e.g:
@@ -32,7 +33,10 @@ import { initFlatpickr } from "../plugins/flatpickr";
 
 document.addEventListener('turbolinks:load', () => {
   if (document.querySelector('#fieldsetContainer')) {
-    addBand()
+    addBand();
+  }
+  if (document.querySelector('#fieldsetEditContainer')) {
+    editBand();
   }
   initFlatpickr();
 });
