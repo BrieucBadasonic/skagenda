@@ -34,6 +34,6 @@ document.addEventListener('turbolinks:load', () => {
   if (document.querySelector('#fieldsetContainer')) {
     addBand()
   }
+  initFlatpickr();
 });
 
-initFlatpickr();
