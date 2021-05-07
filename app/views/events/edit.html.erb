@@ -10,14 +10,16 @@
     <%= event_venue.input :address, label: "Venue address" %>
   <% end %>
 
-  <%= f.simple_fields_for :bands do |event_band| %>
-    <div id="fieldsetContainer">
-    <fieldset id="0">
-      <%= event_band.input :name, label: "Band name", permitted: true %>
+  <div class="fieldsetcontainer">
+    <% @event.bands.each_with_index do |band, index| %>
+      <%= f.simple_fields_for band do |band| %>
+        <fieldset id="<%= index %>">
+          <%= band.input :name, label: "Band name", permitted: true %>
+        </fieldset>
+      <% end %>
     <% end %>
-    </fieldset>
+  </div>
   <%= f.input :photo, as: :file %>
-    </div>
   <%= f.submit "Update Event" %>
 <% end %>
   <button id="addBand">Add another band</button>

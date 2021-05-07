@@ -75,14 +75,13 @@ class EventsController < ApplicationController
   def update
     # check if there is a new phot in the params
     # update with the new photo or keep the old one if there is no new one
+    update_venue
     if params[:event].has_key?("photo")
-      if @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
-        redirect_to events_path, notice: "Event was successfully updated"
-      end
+      @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     else
       @event.update(date: event_params[:date], price: event_params[:price])
-      redirect_to events_path, notice: "Event was successfully updated"
     end
+    redirect_to events_path
   end
 
   def destroy
@@ -99,5 +98,18 @@ class EventsController < ApplicationController
   def find_event
     @event = Event.find(params[:id])
     authorize @event
+  end
+
+  def update_venue
+    if params[:event].has_key?("venue")
+      if Venue.where(name: params[:event][:venue][:name]).exists?
+        @venue = Venue.where(name: params[:event][:venue][:name])[0]
+      else
+        @venue = Venue.new(name: params[:event][:venue][:name],
+                           address: params[:event][:venue][:address])
+        @venue.save!
+      end
+      @event.venue = @venue
+    end
   end
 end
