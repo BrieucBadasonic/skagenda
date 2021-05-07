@@ -75,6 +75,7 @@ class EventsController < ApplicationController
   def update
     # check if there is a new phot in the params
     # update with the new photo or keep the old one if there is no new one
+    byebug
     update_venue
     update_bands
     if params[:event].has_key?("photo")

@@ -6,12 +6,13 @@ const editBand = () => {
     const lastId = document.querySelector("#fieldsetEditContainer").lastElementChild.lastElementChild.id;
 
     // convert last ID to int and add + 1
-    const newId = parseInt(lastId, 10) + 1;
+    const newId = (parseInt(lastId, 10) + 1).toString();
 
     // clone band form input div
-    const newInputField = document.querySelector('[id="0"]').cloneNode(true)
+    const newInputField = document.getElementById(lastId).cloneNode(true)
     // replace the id with the new id
-    newInputField.outerHTML.replace(/0/g,newId);
+    newInputField.setAttribute("id", newId);
+
     // reset the value attribut to an empty string
     newInputField.setAttribute('value', "")
 
@@ -25,7 +26,7 @@ const editBand = () => {
 
     // creating a new div form container
     const formContainer = document.createElement('div')
-    formContainer.classList.add("form", "string", "optional", "event_band_name", "form-group-valid")
+    formContainer.classList.add("form-group", "string", "optional", "event_band_name", "form-group-valid")
 
     // injecting new label and new input field inside the empty form container
     formContainer.appendChild( lastLabel )
