@@ -3,7 +3,7 @@
   <%= f.input :price %>
  <!--  <%= f.association :venue %> -->
 
-  <%= f.simple_fields_for :venues do |event_venue| %>
+  <%= f.simple_fields_for :venue do |event_venue| %>
     <%= event_venue.input :name, label: "Venue name" %>
     <%= event_venue.input :address, label: "Venue address" %>
   <% end %>
