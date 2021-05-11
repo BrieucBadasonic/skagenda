@@ -5,7 +5,7 @@ class Event < ApplicationRecord
   has_many :bands, through: :timeslots
   has_one_attached :photo
 
-  accepts_nested_attributes_for :bands
+  accepts_nested_attributes_for :bands, reject_if: lambda { |attributes| attributes['name'].blank? }
 
   validates :date, :price, presence: true
 
