@@ -40,21 +40,7 @@ class EventsController < ApplicationController
     @event.user = current_user
     @event.venue = @venue
 
-    # create new bands if they are not found in the DB
-    # create timeslot with the band for the event and link it to the new event
-    event_params[:bands_attributes].each do |band|
-      @ts = Timeslot.new
-      @ts.event = @event
-      if Band.where(name: band[1][:name]).empty?
-        @band = Band.new(name: band[1][:name])
-        @band.save!
-      else
-        @band = Band.where(name: band[1][:name])[0]
-      end
-      @ts.band = @band
-      authorize @ts
-      @ts.save!
-    end
+    create_band
 
     #  authorize the event in pundit, save it and redirect
     authorize @event
@@ -101,6 +87,24 @@ class EventsController < ApplicationController
   def find_event
     @event = Event.find(params[:id])
     authorize @event
+  end
+
+  def create_band
+    # create new bands if they are not found in the DB
+    # create timeslot with the band for the event and link it to the new event
+    event_params[:bands_attributes].each do |band|
+      @ts = Timeslot.new
+      @ts.event = @event
+      if Band.where(name: band[1][:name]).empty?
+        @band = Band.new(name: band[1][:name])
+        @band.save!
+      else
+        @band = Band.where(name: band[1][:name])[0]
+      end
+      @ts.band = @band
+      authorize @ts
+      @ts.save!
+    end
   end
 
   def update_venue

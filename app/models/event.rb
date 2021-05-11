@@ -7,6 +7,8 @@ class Event < ApplicationRecord
 
   accepts_nested_attributes_for :bands
 
+  validates :date, :price, presence: true
+
   def confirm?
     confirm
   end
