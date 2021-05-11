@@ -76,6 +76,7 @@ class EventsController < ApplicationController
     # update with the new photo or keep the old one if there is no new one
     update_venue
     update_bands
+    destroy_timeslot
     if params[:event].has_key?("photo")
       @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     else
@@ -126,10 +127,8 @@ class EventsController < ApplicationController
       if Band.where(name: band.last[:name]).exists?
         @band = Band.where(name: band.last[:name])[0]
         # if TRUE --> check if there is a TS with that band and the venue
-        unless Timeslot.where(band_id: @band.id, event_id: @event.id).exists?
-          #   if TRUE --> create a TS with tha band and the venue
-          @ts.band = @band
-        end
+        #   UNLESS --> create a TS with tha band and the venue
+        @ts.band = @band unless Timeslot.where(band_id: @band.id, event_id: @event.id).exists?
       else
         # if FALSE --> create the band and create the TS with the new band and the venue
         @band = Band.new(name: band.last[:name])
@@ -137,6 +136,20 @@ class EventsController < ApplicationController
         @ts.band = @band
       end
       @ts.save
+    end
+  end
+
+  def destroy_timeslot
+    # get all the timeslot connected to this event
+    @ts = Timeslot.where(event_id: @event.id)
+    # loop thru TS
+    @ts.each do |ts|
+      # get the band name of the ts
+      ts_band_name = Band.find(ts.band_id).name
+      # get an array of bands name of the bnad inside params
+      band_names = params[:event][:bands_attributes].to_unsafe_h.to_a.flatten.select { |x| x.is_a?(Hash) }.map { |h| h["name"] }
+      # destroy ts if ts_band_name is not include in the params bands names
+      ts.destroy unless band_names.include?(ts_band_name)
     end
   end
 end
