@@ -32,12 +32,13 @@ import { initFlatpickr } from "../plugins/flatpickr";
 // import { initSelect2 } from '../components/init_select2';
 
 document.addEventListener('turbolinks:load', () => {
-  initFlatpickr();
+  window.addEventListener('DOMContentLoaded', initFlatpickr());
+
   if (document.querySelector('#fieldsetContainer')) {
     addBand();
   }
-  if (document.querySelector('#fieldsetEditContainer')) {
-    editBand();
-  }
+  // if (document.querySelector('#fieldsetEditContainer')) {
+  //   editBand();
+  // }
 });
 
