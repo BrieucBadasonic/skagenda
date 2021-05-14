@@ -1,16 +1,3 @@
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Thanks again! Now go create something AMAZING! :D
-***
-***
-***
-*** To avoid retyping too much info. Do a search and replace for the following:
-*** BrieucBadasonic, skagenda, twitter_handle, email, Moonstomp Agenda, project_description
--->
-
-
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -32,11 +19,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/BrieucBadasonic/skagenda">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Moonstomp Agenda</h3>
+  <a href="https://github.com/BrieucBadasonic/skagenda"> Moonstomp Agenda </a>
 
   <p align="center">
     project_description
@@ -45,10 +28,6 @@
     <br />
     <br />
     <a href="https://github.com/BrieucBadasonic/skagenda">View Demo</a>
-    ·
-    <a href="https://github.com/BrieucBadasonic/skagenda/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/BrieucBadasonic/skagenda/issues">Request Feature</a>
   </p>
 </p>
 
@@ -195,4 +174,4 @@ Project Link: [https://github.com/BrieucBadasonic/skagenda](https://github.com/B
 [license-shield]: https://img.shields.io/github/license/BrieucBadasonic/repo.svg?style=for-the-badge
 [license-url]: https://github.com/BrieucBadasonic/repo/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/BrieucBadasonic
+[linkedin-url]: https://www.linkedin.com/in/brieuc-labiouse/
