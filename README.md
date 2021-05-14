@@ -21,15 +21,11 @@
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <a href="#built-with">Built With</a>
-      <a href="#Database-schema">Database Schema</a>
-      <a href="#Tech-I-want_to_solidify">Tech I want to solidify</a>
-      <a href="#Contact">Contact</a>
-    </li>
-  </ol>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#built-with">Built With</a></li>
+    <li><a href="#Database-schema">Database Schema</a></li>
+    <li><a href="#Tech-I-want_to_solidify">Tech I want to solidify</a></li>
+    <li><a href="#Contact">Contact</a></li>
 </details>
 
 
