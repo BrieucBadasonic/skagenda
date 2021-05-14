@@ -115,9 +115,9 @@ I will do continuous integrations via Github actions.
 Brieuc Labiouse -
 [![Linkedin](https://i.stack.imgur.com/gVE0j.png) LinkedIn](https://www.linkedin.com/in/brieuc-labiouse/)
 &nbsp;
-[![GitHub](https://i.stack.imgur.com/tskMh.png) GitHub](https://github.com/BrieucBadasonic)
+- [![GitHub](https://i.stack.imgur.com/tskMh.png) GitHub](https://github.com/BrieucBadasonic)
 &nbsp;
-[email](brieuclabiouse@gmail.com)
+- [Email](brieuclabiouse@gmail.com)
 
 
 
