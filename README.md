@@ -22,12 +22,11 @@
   <a href="https://github.com/BrieucBadasonic/skagenda"> Moonstomp Agenda </a>
 
   <p align="center">
-    project_description
+    My first post Le Wagon bootcamp project
+    Creating a online agenda where any soul and ska lover can references upconing shows
     <br />
-    <a href="https://github.com/BrieucBadasonic/skagenda"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/BrieucBadasonic/skagenda">View Demo</a>
+    <a href="https://moonstomp-agenda.herokuapp.com">Go to the website</a>
   </p>
 </p>
 
@@ -64,7 +63,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+I wanted to keep on solidify my backend knowledge after finishing my Web Dev. bootcamp at Le Wagon Berlin in march 2021.
+
+The purpose of this website is to centralize upcoming soul, rocksteady and ska show in Europe so fan's doen't have to follow tons
+of Facebook groups to be aware of interesting show around them.
+
+Anybody will be able to add a new show but they will have to be validated by an admin before being published.
+
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
@@ -73,16 +78,16 @@ Here's a blank template to get started:
 
 ### Built With
 
-* []()
-* []()
-* []()
+* Ruby On Rails framework
+* PostgreSQL Database
+* HTML, CSS, SCSS and Javascript
 
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Database schema
 
-To get a local copy up and running follow these simple steps.
+<img src="./app/images/db_schema.png" alt="DB schema">
 
 ### Prerequisites
 
@@ -144,9 +149,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Brieuc Labiouse - [@twitter_handle]() - email
 
-Project Link: [https://github.com/BrieucBadasonic/skagenda](https://github.com/BrieucBadasonic/skagenda)
+Project Link: [https://github.com/BrieucBadasonic/skagenda](https://moonstomp-agenda.herokuapp.com)
 
 
 
