@@ -117,7 +117,7 @@ Brieuc Labiouse -
 &nbsp;
 [![GitHub](https://i.stack.imgur.com/tskMh.png) GitHub](https://github.com/BrieucBadasonic)
 &nbsp;
-GitHub](brieuclabiouse@gmail.com)
+[email](brieuclabiouse@gmail.com)
 
 
 
