@@ -64,7 +64,6 @@ I'm using the DEVISE gem to deal with authentication.
 I'm using the PUNDIT gem to deal with authorization.
 
 User don't need to log in te see she index of the events.
-
 User will have to log in to add a new event .
                             edit or delete a show they had created.
 
