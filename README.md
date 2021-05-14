@@ -23,7 +23,6 @@
 
   <p align="center">
     My first post Le Wagon bootcamp project
-    Creating a online agenda where any soul and ska lover can references upconing shows
     <br />
     <br />
     <a href="https://moonstomp-agenda.herokuapp.com">Go to the website</a>
@@ -66,28 +65,40 @@
 I wanted to keep on solidify my backend knowledge after finishing my Web Dev. bootcamp at Le Wagon Berlin in march 2021.
 
 The purpose of this website is to centralize upcoming soul, rocksteady and ska show in Europe so fan's doen't have to follow tons
-of Facebook groups to be aware of interesting show around them.
+of Facebook groups to be aware of interestings shows around them.
 
 Anybody will be able to add a new show but they will have to be validated by an admin before being published.
+I want that mechanism so we make sure the added event a related to the Music scene we ant to promote and we will check
+that those event are not promoting any kind of discriminations.
 
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`BrieucBadasonic`, `skagenda`, `twitter_handle`, `email`, `Moonstomp Agenda`, `project_description`
-
-
-### Built With
+## Built With
 
 * Ruby On Rails framework
 * PostgreSQL Database
 * HTML, CSS, SCSS and Javascript
+* Heroku for production
 
 
+## Tech I wanted to solidify
 
-<!-- GETTING STARTED -->
+* Authentication & Authorisation
+I'm using the DEVISE gem to deal with authentication.
+I'm using the PUNDIT gem to deal with authorization.
+
+User don't need to log in te see she index of the events.
+
+User will have to log in to add a new event .
+                            edit or delete a show they had created.
+
+Some user will be defined as "Admin users".
+Those user will have an extra tab in the nav bar to "Validate events".
+Admin will have the right to edit and delete any events.
+
 ## Database schema
 
 <img src="./app/assets/images/db_schema.png" alt="DB schema">
+
 
 ### Prerequisites
 
