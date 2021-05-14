@@ -24,7 +24,7 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#Database-schema">Database Schema</a></li>
-    <li><a href="#Tech-I-want_to_solidify">Tech I want to solidify</a></li>
+    <li><a href="#Tech-I-want-to-solidify">Tech I want to solidify</a></li>
     <li><a href="#Contact">Contact</a></li>
 </details>
 
