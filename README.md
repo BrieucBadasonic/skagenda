@@ -87,7 +87,7 @@ Here's a blank template to get started:
 <!-- GETTING STARTED -->
 ## Database schema
 
-<img src="./app/images/db_schema.png" alt="DB schema">
+<img src="./app/assets/images/db_schema.png" alt="DB schema">
 
 ### Prerequisites
 
