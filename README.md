@@ -83,6 +83,7 @@ that those event are not promoting any kind of discriminations.
 ## Tech I wanted to solidify
 
 * Authentication & Authorisation
+
 I'm using the DEVISE gem to deal with authentication.
 I'm using the PUNDIT gem to deal with authorization.
 
@@ -94,6 +95,23 @@ User will have to log in to add a new event .
 Some user will be defined as "Admin users".
 Those user will have an extra tab in the nav bar to "Validate events".
 Admin will have the right to edit and delete any events.
+
+* Nested forms with 1:n and n:n relations
+
+Forms are one of the most important of any web based app.
+I want to deeply understand how i can generate forms that will create or update records in
+diffrent tables od my Database at the same time.
+simple form in the view and accepts_nested_attributes_for in the models
+
+
+* Unit and System Testing - in progress
+
+I'm aware that testing is one of the most valuable skills I need to learn and master before
+applying for my first web dev. job.
+I will use MINITEST and CAPYBARA gem to write test and interact with the webpage.
+
+
+* Continuous integration
 
 ## Database schema
 
