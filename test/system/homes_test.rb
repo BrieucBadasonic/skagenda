@@ -11,6 +11,13 @@ class HomesTest < ApplicationSystemTestCase
   test "visiting the index, checking there is no navbar" do
     visit root_url
 
-    assert_selector ".nav_title", text: "Moonstomp Agenda", count: 0
+    assert_selector ".nav-title", text: "Moonstomp Agenda", count: 0
+  end
+
+  test "click on agenda bring us to events#index" do
+    visit root_url
+
+    click_on "Agenda"
+    assert_selector ".nav-title", text: "Moonstomp Agenda"
   end
 end
