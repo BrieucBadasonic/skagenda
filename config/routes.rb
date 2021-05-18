@@ -11,7 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :venues, only: [ :index ] do
-    resources :events, only: [ :edit, :update ]
+
+  resources :events, only: [ :edit, :update ] do
+    resources :venues, only: [ :index ]
   end
 end
