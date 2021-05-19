@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   resources :events, only: [ :edit, :update ] do
     resources :venues, only: [ :index ]
   end
+
+  resources :venues, only: [ :update ]
 end

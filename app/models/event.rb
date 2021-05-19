@@ -6,6 +6,7 @@ class Event < ApplicationRecord
   has_one_attached :photo
 
   accepts_nested_attributes_for :bands
+  accepts_nested_attributes_for :venue
 
   validates :date, :price, presence: true
 
