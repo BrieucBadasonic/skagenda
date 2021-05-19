@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import Rails from '@rails/ujs';
 
 export default class extends Controller {
   static targets = [ "date", "price", "eventurl"]
@@ -7,24 +8,21 @@ export default class extends Controller {
     const editDate = this.dateTarget.value;
     const editPrice = this.priceTarget.value;
     const url = this.eventurlTarget.action
-    const token = document.querySelector(".edit_event").firstChild.nextSibling.value
-    console.log(token)
+    const token = this.element.firstChild.nextSibling.value
+
     event.preventDefault();
 
-    fetch(url, { headers: { accepts: "application/json",
-                            "X-CSRF-Token": token },
-                 method: 'PATCH',
-                 body: JSON.stringify({ date: editDate,
-                                        price: editPrice
-                                     })
-               })
-      .then(response => response)
-      .then((data) => {
+    Rails.ajax({
+      url: url,
+      headers : { accepts: "application/json" },
+      type: "PATCH",
+      data: `event[date]=${editDate}&event[price]=${editPrice}`,
+      success: (data) => {
         console.log(data)
-      })
-
+      },
+      error: function(data) {}
+    })
 
   }
 }
 
-// edit_event_path(@event)

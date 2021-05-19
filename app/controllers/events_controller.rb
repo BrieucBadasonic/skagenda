@@ -58,14 +58,16 @@ class EventsController < ApplicationController
   end
 
   def update
-    price = JSON.parse(request.body.string)["price"].to_i
-    date = JSON.parse(request.body.string)["date"]
-    @event.update(date: date, price: price)
+    date = params[:event][:date]
+    price = params[:event][:price]
 
-    respond_to do |format|
-      format.html
-      format.json { render json: { event: @event } }
-    end
+    @event.update(date: date, price: price)
+    render json: { event: @event,
+                   confirmation: ....... render_to_str + path + localas }
+
+    # respond_to do |format|
+    #   format.html
+    # end
   end
 
   # def update
