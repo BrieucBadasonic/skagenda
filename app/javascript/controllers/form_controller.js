@@ -3,7 +3,7 @@ import Rails from '@rails/ujs';
 
 export default class extends Controller {
   static targets = [ "date", "price", "eventurl", "eventFlash",
-                     "venueName", "venueAddress"]
+                     "venueName", "venueAddress", "bandName"]
 
   concert(event) {
     event.preventDefault();
@@ -22,8 +22,14 @@ export default class extends Controller {
 
     // update venue variable
     const venueName = this.venueNameTarget.value;
-    const venueAddress = this.venueAddressTarget.value;
+    const venueAddress = this.venueAddressTarget;
     const venueId = this.venueAddressTarget.parentNode.nextElementSibling.value
+
+    // update band name
+    const bandNames = [];
+    this.bandNameTargets.forEach((band) => {
+      bandNames.push(band.attributes.value.value)
+    })
 
     eventFlash.innerHTML = ""
 
@@ -44,13 +50,14 @@ export default class extends Controller {
 
     //  update venue API call
     Rails.ajax({
-      url: `${domain}venues/${venueId}`,
+      url: `${url}/venues`,
       headers : { accepts: "application/json" },
-      type: "PATCH",
-      data: `venue[name]=${venueName}&venue[address]=${venueAddress}`,
+      type: "POST",
+      data: `venue[name]=${venueName}&venue[address]=${venueAddress.value}`,
       success: (data) => {
         if (data.html) {
-          eventFlash.insertAdjacentHTML("beforeend", data.html)
+          venueAddress.value = data.venue.address
+          eventFlash.insertAdjacentHTML("beforeend", data.html);
         }
       },
       error: function(data) {}
