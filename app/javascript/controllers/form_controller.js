@@ -30,6 +30,13 @@ export default class extends Controller {
     this.bandNameTargets.forEach((band) => {
       bandNames.push(band.attributes.value.value)
     })
+    // build data string for band API call
+    let bandData = ""
+    bandNames.forEach((band, index) => {
+      bandData += `bandNames[]=${band}&`
+    })
+    bandData = bandData.slice(0, -1)
+    console.log(bandData)
 
     eventFlash.innerHTML = ""
 
@@ -59,6 +66,18 @@ export default class extends Controller {
           venueAddress.value = data.venue.address
           eventFlash.insertAdjacentHTML("beforeend", data.html);
         }
+      },
+      error: function(data) {}
+    })
+
+    // update band API call
+    Rails.ajax({
+      url: `${url}/bands`,
+      headers : { accepts: "application/json" },
+      type: "POST",
+      data: `${bandData}`,
+      succes: (data) => {
+
       },
       error: function(data) {}
     })

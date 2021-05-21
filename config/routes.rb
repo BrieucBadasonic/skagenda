@@ -13,5 +13,6 @@ Rails.application.routes.draw do
 
   resources :events, only: [ :edit, :update ] do
     resources :venues, only: [ :create ]
+    resources :bands, only: [ :create ]
   end
 end
