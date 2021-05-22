@@ -1,30 +1,4 @@
 <div class="container">
   <h1>Edit your event</h1>
-  <%= simple_form_for(([@event]),
-                        method: "PATCH",
-                        data: { form_target: "eventurl",
-                                controller: "form"
-                        },
-                        class: 'event_form'
-                          ) do |f| %>
-    <%= f.input :date, as: :string, input_html: {class: "datepicker", "data-form-target" => 'date'} %>
-    <%= f.input :price, input_html: {"data-form-target" => 'price'} %>
-    <button class="btn btn-primary"
-            data-action="click->form#concert" >Event</button>
-    <div id="event" data-form-target="eventFlash"></div>
-
-    <%= f.simple_fields_for :venue do |venue| %>
-      <%= venue.input :name, label: "Venue name", input_html: {"data-form-target" => 'venueName'}%>
-      <%= venue.input :address, label: "Venue address", input_html: {"data-form-target" => 'venueAddress'}%>
-    <% end %>
-
-    <div class="fieldsetEditContainer">
-      <%= f.simple_fields_for :bands do |band| %>
-        <%= band.input :name, label: "Band name", input_html: {"data-form-target" => 'bandName'}%>
-      <% end %>
-    </div>
-    <%= f.input :photo, as: :file %>
-    <%= f.submit "Update" %>
-  <% end %>
-  <button id="addBand">Add another band</button>
+  <%= render "formedit" %>
 </div>
