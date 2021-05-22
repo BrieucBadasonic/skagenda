@@ -28,7 +28,7 @@ export default class extends Controller {
     // update band name
     const bandNames = [];
     this.bandNameTargets.forEach((band) => {
-      bandNames.push(band.attributes.value.value)
+      bandNames.push(band.value)
     })
     // build data string for band API call
     let bandData = ""
@@ -36,7 +36,6 @@ export default class extends Controller {
       bandData += `bandNames[]=${band}&`
     })
     bandData = bandData.slice(0, -1)
-    console.log(bandData)
 
     eventFlash.innerHTML = ""
 
@@ -48,7 +47,6 @@ export default class extends Controller {
       data: `event[date]=${editDate}&event[price]=${editPrice}`,
       success: (data) => {
         if (data.html) {
-          console.log(data.html)
           eventFlash.insertAdjacentHTML("beforeend", data.html)
         }
       },
