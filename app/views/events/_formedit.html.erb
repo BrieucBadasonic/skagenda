@@ -1,13 +1,12 @@
 <%= simple_form_for(([@event]),
-                      method: "PATCH",
                       data: { form_target: "eventurl",
-                              controller: "form"
+                              controller: "form",
+                              method: method
                       },
                       class: 'event_form'
                         ) do |f| %>
   <%= f.input :date, as: :string, input_html: {class: "datepicker", "data-form-target" => 'date'} %>
   <%= f.input :price, input_html: {"data-form-target" => 'price'} %>
-  <div id="event" data-form-target="eventFlash"></div>
 
   <%= f.simple_fields_for :venue do |venue| %>
     <%= venue.input :name, label: "Venue name", input_html: {"data-form-target" => 'venueName'}%>

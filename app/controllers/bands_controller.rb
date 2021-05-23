@@ -33,7 +33,7 @@ class BandsController < ApplicationController
       ts.save
       destroy_unused_timeslot(event, band_names)
     end
-    redirect_to events_path
+    # redirect_to events_path
   end
 
   private

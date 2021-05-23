@@ -26,28 +26,15 @@ class EventsController < ApplicationController
   end
 
   def create
-    # Create a new venue if the venue enter by the user is not found in the DB
-    if Venue.where(name: event_params[:venue][:name]).empty?
-      @venue = Venue.new(event_params[:venue])
-      authorize @venue
-      @venue.save!
-    else
-      @venue = Venue.where(name: event_params[:venue][:name])[0]
-    end
-
-    # create the new event and add the current user to it
-    @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
-    @event.user = current_user
-    @event.venue = @venue
-
-    create_band
-
-    #  authorize the event in pundit, save it and redirect
+    @event = Event.new(event_params)
     authorize @event
+    user = current_user
+    venue = Venue.last
+    @event.user = user
+    @event.venue = venue
     if @event.save
-      redirect_to events_path
-    else
-      render :new
+      render json: { html: render_to_string(partial: 'edit-event'),
+                     event: Event.last.id }
     end
   end
 
@@ -63,8 +50,9 @@ class EventsController < ApplicationController
 
     unless @event.date == date && @event.price == price.to_i
       @event.update(date: date, price: price)
-      render json: { html: render_to_string(partial: 'edit-event') }
     end
+    render json: { html: render_to_string(partial: 'edit-event'),
+                   event: @event.id }
   end
 
   def destroy
@@ -75,9 +63,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:date, :price, :photo,
-                                  venue: [:name, :address],
-                                  bands_attributes: [:id, :name])
+    params.require(:event).permit(:date, :price, :photo)
   end
 
   def find_event
