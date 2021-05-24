@@ -2,8 +2,8 @@ import { Controller } from "stimulus"
 import Rails from '@rails/ujs';
 
 export default class extends Controller {
-  static targets = [ "date", "price", "eventurl",
-                     "venueName", "venueAddress", "bandName"]
+  static targets = [ "date", "price", "eventurl", "venueName",
+                     "venueAddress", "bandName", "picture"]
 
   concert(event) {
     event.preventDefault();
@@ -34,6 +34,11 @@ export default class extends Controller {
     })
     bandData = bandData.slice(0, -1)
 
+    const eventPic = this.pictureTarget.files[0]
+    const formData = new FormData();
+    formData.append('event_picture', eventPic)
+
+
     //  update venue API call
     const updateVenue = (domain, eventId, venueName, venueAddress) => {
       Rails.ajax({
@@ -41,6 +46,7 @@ export default class extends Controller {
         headers : { accepts: "application/json" },
         type: "POST",
         data: `venue[name]=${venueName}&venue[address]=${venueAddress.value}`,
+        processData: false,
         success: (data) => {
           if (data.html) {
             venueAddress.value = data.venue.address
@@ -62,12 +68,13 @@ export default class extends Controller {
       })
     }
 
-    // update event API call
+    // update event API call and get the event ID in the response
+    // call update venue and update band with event ID
     Rails.ajax({
       url: url,
       headers : { accepts: "application/json" },
       type: `${method}`,
-      data: `event[date]=${editDate}&event[price]=${editPrice}`,
+      data: `pic=` + formData + `&event[date]=${editDate}&event[price]=${editPrice}`,
       success: (data) => {
         const eventId = data.event
         updateVenue(domain, eventId, venueName, venueAddress);
