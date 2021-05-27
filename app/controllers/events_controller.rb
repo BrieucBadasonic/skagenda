@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
   before_action :skip_authorization, only: :index
-  before_action :find_event, only: [:edit, :update, :destroy, :confirmed]
+  before_action :find_event, only: [:edit, :update, :destroy, :confirmed, :update_venue]
   def index
     @events = policy_scope(Event).where('date > ?', Time.now.to_date).order(date: :asc)
   end
@@ -27,8 +27,8 @@ class EventsController < ApplicationController
 
   def create
     # Create a new venue if the venue enter by the user is not found in the DB
-    if Venue.where(name: event_params[:venue][:name]).empty?
-      @venue = Venue.new(event_params[:venue])
+    if Venue.where(name: event_params[:venue_attributes][:name]).empty?
+      @venue = Venue.new(event_params[:venue_attributes])
       authorize @venue
       @venue.save!
     else
@@ -80,7 +80,7 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:date, :price, :photo,
-                                  venue: [:name, :address],
+                                  venue_attributes: [:name, :address],
                                   bands_attributes: [:id, :name])
   end
 
@@ -108,21 +108,22 @@ class EventsController < ApplicationController
   end
 
   def update_venue
-    if params[:event].has_key?("venue")
-      if Venue.where(name: params[:event][:venue][:name]).exists?
-        @venue = Venue.where(name: params[:event][:venue][:name])[0]
-      else
-        @venue = Venue.new(name: params[:event][:venue][:name],
-                           address: params[:event][:venue][:address])
-        @venue.save!
-      end
-      @event.venue = @venue
+    return if event_params[:venue_attributes][:name] == ""
+    return unless event_params.key?("venue_attributes")
+
+    if Venue.where(name: event_params[:venue_attributes][:name]).exists?
+      @venue = Venue.where(name: event_params[:venue_attributes][:name])[0]
+    else
+      @venue = Venue.new(name: event_params[:venue_attributes][:name],
+                         address: event_params[:venue_attributes][:address])
+      @venue.save!
     end
+    @event.venue = @venue
   end
 
   def update_bands
     # iterate thru all the band in the params
-    params[:event][:bands_attributes].to_unsafe_h.each do |band|
+    event_params[:bands_attributes].to_unsafe_h.each do |band|
       # create a new TS and associate it with the event we are working on
       @ts = Timeslot.new
       @ts.event = @event
@@ -151,7 +152,7 @@ class EventsController < ApplicationController
       # get the band name of the ts
       ts_band_name = Band.find(ts.band_id).name
       # get an array of bands name of the bnad inside params
-      band_names = params[:event][:bands_attributes].to_unsafe_h.to_a.flatten.select { |x| x.is_a?(Hash) }.map { |h| h["name"] }
+      band_names = event_params[:bands_attributes].to_unsafe_h.to_a.flatten.select { |x| x.is_a?(Hash) }.map { |h| h["name"] }
       # destroy ts if ts_band_name is not include in the params bands names
       ts.destroy unless band_names.include?(ts_band_name)
     end
