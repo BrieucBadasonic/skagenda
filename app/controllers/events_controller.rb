@@ -27,8 +27,8 @@ class EventsController < ApplicationController
 
   def create
     # Create a new venue if the venue enter by the user is not found in the DB
-    if Venue.where(name: event_params[:venue_attributes][:name]).empty?
-      @venue = Venue.new(event_params[:venue_attributes])
+    if Venue.where(name: event_params[:venue][:name]).empty?
+      @venue = Venue.new(event_params[:venue])
       authorize @venue
       @venue.save!
     else
@@ -80,7 +80,7 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:date, :price, :photo,
-                                  venue_attributes: [:name, :address],
+                                  venue: [:name, :address],
                                   bands_attributes: [:id, :name])
   end
 
@@ -108,14 +108,14 @@ class EventsController < ApplicationController
   end
 
   def update_venue
-    return if event_params[:venue_attributes][:name] == ""
+    return if event_params[:venue][:name] == ""
     return unless event_params.key?("venue_attributes")
 
-    if Venue.where(name: event_params[:venue_attributes][:name]).exists?
-      @venue = Venue.where(name: event_params[:venue_attributes][:name])[0]
+    if Venue.where(name: event_params[:venue][:name]).exists?
+      @venue = Venue.where(name: event_params[:venue][:name])[0]
     else
-      @venue = Venue.new(name: event_params[:venue_attributes][:name],
-                         address: event_params[:venue_attributes][:address])
+      @venue = Venue.new(name: event_params[:venue][:name],
+                         address: event_params[:venue][:address])
       @venue.save!
     end
     @event.venue = @venue
