@@ -27,28 +27,35 @@ class EventsController < ApplicationController
 
   def create
     # Create a new venue if the venue enter by the user is not found in the DB
-    if Venue.where(name: event_params[:venue][:name]).empty?
-      @venue = Venue.new(event_params[:venue])
-      authorize @venue
-      @venue.save!
-    else
-      @venue = Venue.where(name: event_params[:venue][:name])[0]
-    end
+    create_venue
+
+    # redirect_to controller: :VenuesController, action: :create
+    # redirect_to controller: :BandsController, action: :create
+
+    # redirect_to controller: "venue", action: "create"
+    # redirect_to controller: "band", action: "create"
+
+    # VenuesController.process(:create)
+    # BandsController.process(:create)
+
+    # redirect_to VenuesController_create_url
+    # redirect_to BandsController_create_url
+
+    # redirect_to venues_path
+
+    # redirect_to controller:: venues, action:: create
+    # redirect_to controller:: bands, action:: create
 
     # create the new event and add the current user to it
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
     @event.venue = @venue
 
-    create_band
+    create_bands
 
     #  authorize the event in pundit, save it and redirect
     authorize @event
-    if @event.save
-      redirect_to events_path
-    else
-      render :new
-    end
+    redirect_to events_path if @event.save
   end
 
   def edit
@@ -89,7 +96,17 @@ class EventsController < ApplicationController
     authorize @event
   end
 
-  def create_band
+  def create_venue
+    if Venue.where(name: event_params[:venue][:name]).empty?
+      @venue = Venue.new(event_params[:venue])
+      authorize @venue
+      @venue.save!
+    else
+      @venue = Venue.where(name: event_params[:venue][:name])[0]
+    end
+  end
+
+  def create_bands
     # create new bands if they are not found in the DB
     # create timeslot with the band for the event and link it to the new event
     event_params[:bands_attributes].each do |band|
@@ -109,7 +126,7 @@ class EventsController < ApplicationController
 
   def update_venue
     return if event_params[:venue][:name] == ""
-    return unless event_params.key?("venue_attributes")
+    return unless event_params.key?("venue")
 
     if Venue.where(name: event_params[:venue][:name]).exists?
       @venue = Venue.where(name: event_params[:venue][:name])[0]

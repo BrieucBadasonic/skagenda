@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   resources :venues, only: [ :index ] do
     resources :events, only: [ :edit, :update ]
   end
+  resources :bands, only: :create
+
+  post "venues", to: "venues#create", as: :venues_create
 end
