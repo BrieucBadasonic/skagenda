@@ -8,6 +8,7 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :bands
 
   validates :date, :price, presence: true
+  validates_uniqueness_of :date, scope: :venue_id
 
   def confirm?
     confirm
