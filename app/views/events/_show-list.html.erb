@@ -15,24 +15,27 @@
       <% if user_signed_in? %>
         <% if policy(event).edit? %>
           <div>
-            <%= link_to "Edit event", edit_venue_event_path(event.venue, event),
-                        class: "btn-event-card" %>
-          </div>
-          <div>
-            <%= link_to "Delete event",
-                        event_path(event),
-                        method: :delete,
-                        data: { confirm: "Are you sure?"},
-                        class: "btn-event-card" %>
-          </div>
-        <% end %>
-        <% if policy(event).confirmation? && !event.confirm %>
-          <div>
-            <%= simple_form_for event, :url => [:confirmed, event], html: { method: :put } do |f| %>
-              <%= f.hidden_field :comfirm, :value => true %>
-              <%= f.submit "Confirm event", class: "btn-event-card" %>
+            <%= link_to edit_venue_event_path(event.venue, event) do %>
+             <span class="material-icons btn-event-card">edit</span>
             <% end %>
           </div>
+          <div>
+            <%= link_to event_path(event),
+                        method: :delete,
+                        data: { confirm: "Are you sure?"} do %>
+              <span class="material-icons btn-event-card">delete</span>
+            <% end %>
+          </div>
+          <% if policy(event).confirmation? && !event.confirm %>
+            <div>
+              <%= simple_form_for event, :url => [:confirmed, event], html: { method: :put } do |f| %>
+                <%= f.hidden_field :comfirm, :value => true %>
+                <%= button_tag type: 'submit', class: "btn-event-card-validation" do %>
+                  <span class="material-icons btn-event-card" >check</span>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>

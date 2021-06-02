@@ -55,7 +55,7 @@ class EventsController < ApplicationController
 
     #  authorize the event in pundit, save it and redirect
     authorize @event
-    redirect_to events_path if @event.save
+    redirect_to events_path, notice: "Event was successfully created" if @event.save
   end
 
   def edit
@@ -75,7 +75,7 @@ class EventsController < ApplicationController
     else
       @event.update(date: event_params[:date], price: event_params[:price])
     end
-    redirect_to events_path
+    redirect_to events_path, notice: "Event was successfully updated"
   end
 
   def destroy
