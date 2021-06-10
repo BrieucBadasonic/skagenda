@@ -28,7 +28,7 @@ class EventsController < ApplicationController
 
   def create
     # Create a new venue if the venue enter by the user is not found in the DB
-    create_venue
+    # create_venue
 
     # redirect_to controller: :VenuesController, action: :create
     # redirect_to controller: :BandsController, action: :create
@@ -50,9 +50,31 @@ class EventsController < ApplicationController
     # create the new event and add the current user to it
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
-    @event.venue = @venue
 
-    create_bands
+    # A venue was selected
+    if(event_params[:venue][:id]){
+      venue_id = event_params[:venue][:id]
+      venue = Venue.find(venue_id)
+    }else{
+      venue = Venue.new(event_params[:venue])
+    }
+    @event.venue = venue 
+
+
+    # band stuff
+
+    event_params[:bands_attributes].each do |band_item|
+      
+      if(band_item[:id]){
+        band = Band.find(band_item[:id])
+      }else{
+        band = Band.new(band_item)
+      }
+      
+      @event.bands.push band
+    end
+
+    @event.save!
 
     #  authorize the event in pundit, save it and redirect
     authorize @event
