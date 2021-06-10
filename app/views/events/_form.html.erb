@@ -1,13 +1,14 @@
 <%= simple_form_for @event do |f| %>
   <%= f.input :date, as: :string, require: false, input_html: {class: "datepicker"} %>
   <%= f.input :price %>
- <!--  <%= f.association :venue %> -->
+  <%= f.association :venue %>
 
   <%= f.simple_fields_for :venue do |event_venue| %>
     <%= event_venue.input :name, label: "Venue name" %>
     <%= event_venue.input :address, label: "Venue address" %>
   <% end %>
 
+  <%= f.association :bands %>
   <%= f.simple_fields_for :bands do |event_band| %>
     <div id="fieldsetContainer">
       <fieldset id="0">

@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  belongs_to :venue
+  belongs_to :venue, autosave: true
   belongs_to :user
   has_many :timeslots, dependent: :destroy
   has_many :bands, through: :timeslots

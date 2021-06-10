@@ -52,25 +52,24 @@ class EventsController < ApplicationController
     @event.user = current_user
 
     # A venue was selected
-    if(event_params[:venue][:id]){
-      venue_id = event_params[:venue][:id]
+    if event_params[:venue_id]
+      venue_id = event_params[:venue_id]
       venue = Venue.find(venue_id)
-    }else{
+    else
       venue = Venue.new(event_params[:venue])
-    }
+    end
     @event.venue = venue 
 
 
     # band stuff
 
-    event_params[:bands_attributes].each do |band_item|
-      
-      if(band_item[:id]){
+    event_params[:bands_attributes].each do |index, value|
+      band_item = event_params[:bands_attributes][index]
+      if band_item[:band]
         band = Band.find(band_item[:id])
-      }else{
+      else
         band = Band.new(band_item)
-      }
-      
+      end
       @event.bands.push band
     end
 
@@ -109,7 +108,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:date, :price, :photo,
+    params.require(:event).permit(:date, :price, :photo, :venue_id, :band_ids,
                                   venue: [:name, :address],
                                   bands_attributes: [:id, :name])
   end
