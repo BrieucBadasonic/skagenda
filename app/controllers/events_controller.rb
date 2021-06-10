@@ -63,13 +63,13 @@ class EventsController < ApplicationController
 
     # band stuff
     # selected bands
-    @event.bands = event_params[:band_ids] if event_params[:band_ids]
+    @event.band_ids = event_params[:band_ids] if event_params[:band_ids]
 
     # non existing bands
     if event_params[:bands_attributes]
       event_params[:bands_attributes].each do |band_item|
         band = Band.find_or_initialize_by(band_item)        
-        @event.bands.push band
+        @event.band_ids.push << band.id
       end
     end
 
