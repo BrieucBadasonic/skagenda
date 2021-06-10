@@ -2,12 +2,13 @@ class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
   before_action :skip_authorization, only: :index
   before_action :find_event, only: [:edit, :update, :destroy, :confirmed, :update_venue]
+
   def index
-    @events = policy_scope(Event).where('date > ?', Time.now.to_date).order(date: :asc)
+    @events = policy_scope(Event).active.order(date: :asc)
   end
 
   def confirmation
-    @events = policy_scope(Event).where('date > ?', Time.now.to_date).order(date: :asc)
+    @events = policy_scope(Event).active.order(date: :asc)
     authorize @events
   end
 
