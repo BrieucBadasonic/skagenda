@@ -58,18 +58,24 @@ class EventsController < ApplicationController
     else
       venue = Venue.new(event_params[:venue])
     end
-    @event.venue = venue 
+    @event.venue = venue
 
 
     # band stuff
     # selected bands
-    @event.band_ids = event_params[:band_ids] if event_params[:band_ids]
+    if event_params[:band_ids]
+      event_params[:band_ids].reject(&:empty?).each do |band_id|
+        band = Band.find(band_id.to_i)
+        @event.bands << band
+      end
+    end
 
     # non existing bands
     if event_params[:bands_attributes]
-      event_params[:bands_attributes].each do |band_item|
-        band = Band.find_or_initialize_by(band_item)        
-        @event.band_ids.push << band.id
+      event_params[:bands_attributes].each do |key, value|
+        band_item = event_params[:bands_attributes][key]
+        band = @event.bands.build(name: band_item[:name])
+        @event.bands << band
       end
     end
 
@@ -108,7 +114,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:date, :price, :photo, :venue_id, :band_ids,
+    params.require(:event).permit(:date, :price, :photo, :venue_id, band_ids: [],
                                   venue: [:name, :address],
                                   bands_attributes: [:id, :name])
   end
@@ -119,6 +125,8 @@ class EventsController < ApplicationController
   end
 
   def create_venue
+    venue = Venue.find_or_initialize(id)
+    venue.persisted?
     if Venue.where(name: event_params[:venue][:name]).empty?
       @venue = Venue.new(event_params[:venue])
       authorize @venue
