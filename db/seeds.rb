@@ -50,10 +50,12 @@ band4.save!
 puts "4 bands created"
 puts "Creating 2 events"
 
-event1 = Event.new(date: '2021-06-24',
+event1 = Event.new(date: '2021-07-24',
                    price: '20',
                    venue: venue1,
                    user: user1)
+event1.bands << band1
+event1.bands << band2
 event1.save!
 file = URI.open('https://res.cloudinary.com/duogrvvdx/image/upload/v1619952376/moonstomp%20agenda/seed/test1_bbjnbo.jpg')
 event1.photo.attach(io: file, filename: 'event.jpg', content_type: 'image/jpg')
@@ -62,27 +64,10 @@ event2 = Event.new(date: '2021-06-27',
                    price: '26',
                    venue: venue2,
                    user: user2)
+event2.bands << band3
+event2.bands << band4
 event2.save!
 file = URI.open('https://res.cloudinary.com/duogrvvdx/image/upload/v1619952366/moonstomp%20agenda/seed/test2_flyqbd.jpg')
 event2.photo.attach(io: file, filename: 'event.jpg', content_type: 'image/jpg')
 
 puts "2 events created"
-puts "Creating 4 time slot"
-
-ts1 = Timeslot.new(band: band1,
-                   event: event1)
-ts1.save!
-
-ts2 = Timeslot.new(band: band2,
-                   event: event1)
-ts2.save!
-
-ts3 = Timeslot.new(band: band3,
-                   event: event2)
-ts3.save!
-
-ts4 = Timeslot.new(band: band4,
-                   event: event2)
-ts4.save!
-
-puts "4 time slot created"

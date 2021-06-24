@@ -27,31 +27,14 @@ class EventsController < ApplicationController
   end
 
   def create
-    # Create a new venue if the venue enter by the user is not found in the DB
-    # create_venue
-
-    # redirect_to controller: :VenuesController, action: :create
-    # redirect_to controller: :BandsController, action: :create
-
-    # redirect_to controller: "venue", action: "create"
-    # redirect_to controller: "band", action: "create"
-
-    # VenuesController.process(:create)
-    # BandsController.process(:create)
-
-    # redirect_to VenuesController_create_url
-    # redirect_to BandsController_create_url
-
-    # redirect_to venues_path
-
-    # redirect_to controller:: venues, action:: create
-    # redirect_to controller:: bands, action:: create
 
     # create the new event and add the current user to it
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
 
     # A venue was selected
+    # venue = Venue.find_or_initialize_by(name: event_params[:venue][:name],
+    #                                     address: event_params[:venue][:address])
     if event_params[:venue_id]
       venue_id = event_params[:venue_id]
       venue = Venue.find(venue_id)
@@ -59,7 +42,6 @@ class EventsController < ApplicationController
       venue = Venue.new(event_params[:venue])
     end
     @event.venue = venue
-
 
     # band stuff
     # selected bands
@@ -72,10 +54,9 @@ class EventsController < ApplicationController
 
     # non existing bands
     if event_params[:bands_attributes]
-      event_params[:bands_attributes].each do |key, value|
-        band_item = event_params[:bands_attributes][key]
-        band = @event.bands.build(name: band_item[:name])
-        @event.bands << band
+      event_params[:bands_attributes].to_unsafe_h.each do |key|
+        band_name = key[1][:name]
+        @event.bands.build(name: band_name)
       end
     end
 

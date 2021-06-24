@@ -10,7 +10,7 @@ class Event < ApplicationRecord
   validates :date, :price, presence: true
   validates_uniqueness_of :date, scope: :venue_id, :message => "Venue already has an event that date"
 
-  scope :active, -> { where('date > ?', Time.now.to_date) }
+  scope :active, -> { where('date >= ?', Time.now.to_date) }
 
   def confirm?
     confirm
