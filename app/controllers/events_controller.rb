@@ -27,32 +27,40 @@ class EventsController < ApplicationController
   end
 
   def create
-    # Create a new venue if the venue enter by the user is not found in the DB
-    create_venue
-
-    # redirect_to controller: :VenuesController, action: :create
-    # redirect_to controller: :BandsController, action: :create
-
-    # redirect_to controller: "venue", action: "create"
-    # redirect_to controller: "band", action: "create"
-
-    # VenuesController.process(:create)
-    # BandsController.process(:create)
-
-    # redirect_to VenuesController_create_url
-    # redirect_to BandsController_create_url
-
-    # redirect_to venues_path
-
-    # redirect_to controller:: venues, action:: create
-    # redirect_to controller:: bands, action:: create
 
     # create the new event and add the current user to it
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
-    @event.venue = @venue
 
-    create_bands
+    # A venue was selected
+    # venue = Venue.find_or_initialize_by(name: event_params[:venue][:name],
+    #                                     address: event_params[:venue][:address])
+    if event_params[:venue_id]
+      venue_id = event_params[:venue_id]
+      venue = Venue.find(venue_id)
+    else
+      venue = Venue.new(event_params[:venue])
+    end
+    @event.venue = venue
+
+    # band stuff
+    # selected bands
+    if event_params[:band_ids]
+      event_params[:band_ids].reject(&:empty?).each do |band_id|
+        band = Band.find(band_id.to_i)
+        @event.bands << band
+      end
+    end
+
+    # non existing bands
+    if event_params[:bands_attributes]
+      event_params[:bands_attributes].to_unsafe_h.each do |key|
+        band_name = key[1][:name]
+        @event.bands.build(name: band_name)
+      end
+    end
+
+    @event.save!
 
     #  authorize the event in pundit, save it and redirect
     authorize @event
@@ -87,7 +95,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:date, :price, :photo,
+    params.require(:event).permit(:date, :price, :photo, :venue_id, band_ids: [],
                                   venue: [:name, :address],
                                   bands_attributes: [:id, :name])
   end
@@ -98,6 +106,8 @@ class EventsController < ApplicationController
   end
 
   def create_venue
+    venue = Venue.find_or_initialize(id)
+    venue.persisted?
     if Venue.where(name: event_params[:venue][:name]).empty?
       @venue = Venue.new(event_params[:venue])
       authorize @venue

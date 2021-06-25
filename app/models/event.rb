@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  belongs_to :venue
+  belongs_to :venue, autosave: true
   belongs_to :user
   has_many :timeslots, dependent: :destroy
   has_many :bands, through: :timeslots
@@ -8,9 +8,9 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :bands
 
   validates :date, :price, presence: true
-  validates_uniqueness_of :date, scope: :venue_id
+  validates_uniqueness_of :date, scope: :venue_id, :message => "Venue already has an event that date"
 
-  scope :active, -> { where('date > ?', Time.now.to_date) }
+  scope :active, -> { where('date >= ?', Time.now.to_date) }
 
   def confirm?
     confirm
