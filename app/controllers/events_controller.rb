@@ -27,7 +27,6 @@ class EventsController < ApplicationController
   end
 
   def create
-
     # create the new event and add the current user to it
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
@@ -95,94 +94,11 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:date, :price, :photo, :venue_id, band_ids: [],
-                                  venue: [:name, :address],
-                                  bands_attributes: [:id, :name])
+    params.require(:event).permit(:date, :price, :photo, :venue_id, band_ids: [], venue: [:name, :address], bands_attributes: [:id, :name])
   end
 
   def find_event
     @event = Event.find(params[:id])
     authorize @event
-  end
-
-  def create_venue
-    venue = Venue.find_or_initialize(id)
-    venue.persisted?
-    if Venue.where(name: event_params[:venue][:name]).empty?
-      @venue = Venue.new(event_params[:venue])
-      authorize @venue
-      @venue.save!
-    else
-      @venue = Venue.where(name: event_params[:venue][:name])[0]
-    end
-  end
-
-  def create_bands
-    # create new bands if they are not found in the DB
-    # create timeslot with the band for the event and link it to the new event
-    event_params[:bands_attributes].each do |band|
-      @ts = Timeslot.new
-      @ts.event = @event
-      if Band.where(name: band[1][:name]).empty?
-        @band = Band.new(name: band[1][:name])
-        @band.save!
-      else
-        @band = Band.where(name: band[1][:name])[0]
-      end
-      @ts.band = @band
-      authorize @ts
-      @ts.save!
-    end
-  end
-
-  def update_venue
-    return if event_params[:venue][:name] == ""
-    return unless event_params.key?("venue")
-
-    if Venue.where(name: event_params[:venue][:name]).exists?
-      @venue = Venue.where(name: event_params[:venue][:name])[0]
-    else
-      @venue = Venue.new(name: event_params[:venue][:name],
-                         address: event_params[:venue][:address])
-      @venue.save!
-    end
-    @event.venue = @venue
-  end
-
-  def update_bands
-    # iterate thru all the band in the params
-    event_params[:bands_attributes].to_unsafe_h.each do |band|
-      # create a new TS and associate it with the event we are working on
-      @ts = Timeslot.new
-      @ts.event = @event
-
-      # check if the band exist in DB
-      if Band.where(name: band.last[:name]).exists?
-        @band = Band.where(name: band.last[:name])[0]
-        # if TRUE --> check if there is a TS with that band and the venue
-        #   UNLESS --> create a TS with tha band and the venue
-        @ts.band = @band unless Timeslot.where(band_id: @band.id, event_id: @event.id).exists?
-      else
-        # if FALSE --> create the band and create the TS with the new band and the venue
-        @band = Band.new(name: band.last[:name])
-        @band.save
-        @ts.band = @band
-      end
-      @ts.save
-    end
-  end
-
-  def destroy_timeslot
-    # get all the timeslot connected to this event
-    @ts = Timeslot.where(event_id: @event.id)
-    # loop thru TS
-    @ts.each do |ts|
-      # get the band name of the ts
-      ts_band_name = Band.find(ts.band_id).name
-      # get an array of bands name of the bnad inside params
-      band_names = event_params[:bands_attributes].to_unsafe_h.to_a.flatten.select { |x| x.is_a?(Hash) }.map { |h| h["name"] }
-      # destroy ts if ts_band_name is not include in the params bands names
-      ts.destroy unless band_names.include?(ts_band_name)
-    end
   end
 end
