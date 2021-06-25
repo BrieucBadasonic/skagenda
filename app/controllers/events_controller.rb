@@ -31,34 +31,10 @@ class EventsController < ApplicationController
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
 
-    # A venue was selected
-    # venue = Venue.find_or_initialize_by(name: event_params[:venue][:name],
-    #                                     address: event_params[:venue][:address])
-    if event_params[:venue_id]
-      venue_id = event_params[:venue_id]
-      venue = Venue.find(venue_id)
-    else
-      venue = Venue.new(event_params[:venue])
-    end
-    @event.venue = venue
-
-    # band stuff
-    # selected bands
-    if event_params[:band_ids]
-      event_params[:band_ids].reject(&:empty?).each do |band_id|
-        band = Band.find(band_id.to_i)
-        @event.bands << band
-      end
-    end
-
-    # non existing bands
-    if event_params[:bands_attributes]
-      event_params[:bands_attributes].to_unsafe_h.each do |key|
-        band_name = key[1][:name]
-        @event.bands.build(name: band_name)
-      end
-    end
-
+    # calling 2 private method to check venue and band
+    # associate an existing venue/band to the event or create a new one
+    checking_venue
+    checking_band
     @event.save!
 
     #  authorize the event in pundit, save it and redirect
@@ -100,5 +76,33 @@ class EventsController < ApplicationController
   def find_event
     @event = Event.find(params[:id])
     authorize @event
+  end
+
+  def checking_venue
+    # A venue was selected
+    # venue = Venue.find_or_initialize_by(name: event_params[:venue][:name],
+    #                                     address: event_params[:venue][:address])
+    if event_params[:venue_id] == ""
+      venue = Venue.new(event_params[:venue])
+    else
+      venue_id = event_params[:venue_id]
+      venue = Venue.find(venue_id)
+    end
+    @event.venue = venue
+  end
+
+  def checking_band
+    # band stuff
+    # selected bands
+    event_params[:band_ids].reject(&:empty?).each do |band_id|
+      band = Band.find(band_id.to_i)
+      @event.bands << band
+    end
+
+    # non existing bands
+    event_params[:bands_attributes].to_unsafe_h.each do |key|
+      band_name = key[1][:name]
+      @event.bands.build(name: band_name)
+    end
   end
 end
