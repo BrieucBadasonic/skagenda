@@ -30,11 +30,11 @@ class EventsController < ApplicationController
     # create the new event and add the current user to it
     @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
     @event.user = current_user
-
     # calling 2 private method to check venue and band
     # associate an existing venue/band to the event or create a new one
-    checking_venue
+    @event.venue = checking_venue
     checking_band
+
     @event.save!
 
     #  authorize the event in pundit, save it and redirect
@@ -43,22 +43,20 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @venue = Venue.find(params[:venue_id])
+    @venue = @event.venue
     authorize @venue
     @event.bands.build
   end
 
   def update
-    # check if there is a new phot in the params
-    # update with the new photo or keep the old one if there is no new one
-    update_venue
-    update_bands
-    destroy_timeslot
-    if params[:event].has_key?("photo")
-      @event.update(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
-    else
-      @event.update(date: event_params[:date], price: event_params[:price])
-    end
+    # use my checking venue method
+    venue = checking_venue
+    @event.update(venue: venue)
+
+    # delete existing event.bands if they are not in the update
+    remove_band
+    # use my checking band method
+    checking_band
     redirect_to events_path, notice: "Event was successfully updated"
   end
 
@@ -85,10 +83,9 @@ class EventsController < ApplicationController
     if event_params[:venue_id] == ""
       venue = Venue.new(event_params[:venue])
     else
-      venue_id = event_params[:venue_id]
+      venue_id = event_params[:venue_id].to_i
       venue = Venue.find(venue_id)
     end
-    @event.venue = venue
   end
 
   def checking_band
@@ -96,13 +93,31 @@ class EventsController < ApplicationController
     # selected bands
     event_params[:band_ids].reject(&:empty?).each do |band_id|
       band = Band.find(band_id.to_i)
-      @event.bands << band
+      @event.bands << band unless @event.bands.include?(band)
     end
-
     # non existing bands
     event_params[:bands_attributes].to_unsafe_h.each do |key|
-      band_name = key[1][:name]
-      @event.bands.build(name: band_name)
+      if key[1][:name] != "" && key[1][:id].nil?
+        band = Band.new(name: key[1][:name]).valid?
+        @event.bands << band if band
+      end
+    end
+  end
+
+  def remove_band
+    # make an array with all the band id of all the event.timeslots
+    timeslot_band_ids = @event.timeslots.map(&:band_id)
+
+    # make an array with all the band id coming from the form "band_ids"
+    form_band_ids = event_params[:band_ids].filter { |band_id| band_id != "" }.map(&:to_i)
+
+    # adding the band_id coming from bands_attributes if they exist
+    event_params[:bands_attributes].to_unsafe_h.each { |key| form_band_ids << key[1][:id].to_i if key[1].key?("id") && key[1][:name] != "" }
+    form_band_ids.uniq!
+
+    # destroy the timeslot if we don't need for the update
+    timeslot_band_ids.each do |timeslot_band_id|
+      @event.timeslots.where(band_id: timeslot_band_id).first.destroy unless form_band_ids.include?(timeslot_band_id)
     end
   end
 end

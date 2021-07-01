@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
 
-  resources :events, only: [ :index, :new, :create, :destroy ] do
+  resources :events, only: %i[index new create destroy edit update] do
     collection do
       get :confirmation
     end
@@ -10,11 +10,4 @@ Rails.application.routes.draw do
       put :confirmed
     end
   end
-
-  resources :venues, only: [ :index ] do
-    resources :events, only: [ :edit, :update ]
-  end
-  resources :bands, only: :create
-
-  post "venues", to: "venues#create", as: :venues_create
 end
