@@ -60,7 +60,7 @@ event1.save!
 file = URI.open('https://res.cloudinary.com/duogrvvdx/image/upload/v1619952376/moonstomp%20agenda/seed/test1_bbjnbo.jpg')
 event1.photo.attach(io: file, filename: 'event.jpg', content_type: 'image/jpg')
 
-event2 = Event.new(date: '2021-06-27',
+event2 = Event.new(date: '2021-08-27',
                    price: '26',
                    venue: venue2,
                    user: user2)
