@@ -98,12 +98,11 @@ class EventsController < ApplicationController
     # non existing bands
     event_params[:bands_attributes].to_unsafe_h.each do |key|
       if key[1][:name] != "" && key[1][:id].nil?
-        band = Band.new(name: key[1][:name]).valid?
+        band = Band.new(name: key[1][:name])
         @event.bands << band if band
       end
     end
   end
-
   def remove_band
     # make an array with all the band id of all the event.timeslots
     timeslot_band_ids = @event.timeslots.map(&:band_id)
