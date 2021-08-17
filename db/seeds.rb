@@ -18,7 +18,7 @@ user1.save!
 user2 = User.new(username: "Nicolas",
                  email: "nicolas@gmail.com",
                  password: "123456")
-# user2.admin = true
+user2.admin = true
 user2.save!
 
 puts "2 users created"
@@ -50,7 +50,7 @@ band4.save!
 puts "4 bands created"
 puts "Creating 2 events"
 
-event1 = Event.new(date: '2021-07-24',
+event1 = Event.new(date: '2021-10-24',
                    price: '20',
                    venue: venue1,
                    user: user1)
@@ -60,7 +60,7 @@ event1.save!
 file = URI.open('https://res.cloudinary.com/duogrvvdx/image/upload/v1619952376/moonstomp%20agenda/seed/test1_bbjnbo.jpg')
 event1.photo.attach(io: file, filename: 'event.jpg', content_type: 'image/jpg')
 
-event2 = Event.new(date: '2021-08-27',
+event2 = Event.new(date: '2021-11-27',
                    price: '26',
                    venue: venue2,
                    user: user2)
