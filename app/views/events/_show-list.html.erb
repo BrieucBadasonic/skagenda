@@ -9,7 +9,20 @@
         <h5><%= band.name %> </h5>
       <% end %>
       <p><strong><%= event.venue.name %></strong> - <%= event.venue.address %></p>
-      <p><%= event.price %> Euros</p>
+      <p><strong>Price/Presale:</strong> <%= event.price %>
+      <% if event.presale %>
+        / <%= event.presale %>
+      <% else %>
+        no presale
+      <% end %> euros
+
+      <% if event.organisateur %>
+         <p><strong>Organize by:</strong> <%= event.organisateur %></p>
+      <% end %>
+
+      <% if event.link %>
+        <p><strong>Link: </strong><%= link_to "FB Event", event.link, html_options = { target: "_blank" } %></p>
+      <% end %>
     </div>
     <div class="card-product-btn">
       <% if user_signed_in? %>
