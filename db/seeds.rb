@@ -51,7 +51,10 @@ puts "4 bands created"
 puts "Creating 2 events"
 
 event1 = Event.new(date: '2021-10-24',
-                   price: '20',
+                   price: 20,
+                   presale: 18,
+                   organisateur: "Flying Platane",
+                   link: "https://www.facebook.com/flyingplatane/",
                    venue: venue1,
                    user: user1)
 event1.bands << band1
@@ -61,7 +64,10 @@ file = URI.open('https://res.cloudinary.com/duogrvvdx/image/upload/v1619952376/m
 event1.photo.attach(io: file, filename: 'event.jpg', content_type: 'image/jpg')
 
 event2 = Event.new(date: '2021-11-27',
-                   price: '26',
+                   price: 26,
+                   presale: 22,
+                   organisateur: "Mr Pierre",
+                   link: "https://www.facebook.com/Monsieur.Pierre",
                    venue: venue2,
                    user: user2)
 event2.bands << band3
