@@ -7,31 +7,42 @@
       <% end %>
     </ul>
   <% end %>
-  <%= f.input :date, as: :string, require: false, input_html: {class: "datepicker"}, label: "Select a date" %>
-  <%= f.input :presale, label: "Presale price" %>
-  <%= f.input :price, label: "Price" %>
-  <%= f.input :organisateur %>
-  <%= f.input :link, label: "Event link (FB, website, ...)" %>
 
-  <%= f.association :venue, label: "Select an existing venue" %>
-  <p>Create a new venue</p>
-  <%= f.simple_fields_for :venue do |event_venue| %>
-    <%= event_venue.input :name, label: "Venue name" %>
-    <%= event_venue.input :address, label: "Venue address" %>
-    <%= event_venue.input :website, label: "Venue website" %>
-  <% end %>
+  <div class="form-event">
+    <h1 class="form-title">Edit your event infos</h1>
+    <%= f.input :date, as: :string, require: false, input_html: {class: "datepicker"}, label: "Select a date" %>
+    <%= f.input :presale, label: "Presale price" %>
+    <%= f.input :price, label: "Price" %>
+    <%= f.input :organisateur %>
+    <%= f.input :link, label: "Event link (FB, website, ...)" %>
+    <%= f.input :photo, as: :file %>
+  </div>
 
-  <%= f.association :bands, label: "Select existing band(s)" %>
-  <p>Create new band(s)</p>
-  <%= f.simple_fields_for :bands do |event_band| %>
-    <div id="fieldsetContainer">
-      <fieldset id="0">
-        <%= event_band.input :name, label: "Band name", permitted: true %>
-        <%= event_band.input :website, label: "Band website", permitted: true %>
-      </fieldset>
-    </div>
-  <% end %>
-  <%= f.input :photo, as: :file %>
+  <div class="form-venue">
+    <h1 class="form-title">Edit your venue</h1>
+    <%= f.association :venue, label: "Select an existing venue" %>
+    <p>Create a new venue</p>
+    <%= f.simple_fields_for :venue do |event_venue| %>
+      <%= event_venue.input :name, label: "Venue name" %>
+      <%= event_venue.input :address, label: "Venue address" %>
+      <%= event_venue.input :website, label: "Venue website" %>
+    <% end %>
+  </div>
+
+  <div class="form-band">
+    <h1 class="form-title">Edit your band(s)</h1>
+    <%= f.association :bands, label: "Select existing band(s)" %>
+    <p>Create new band(s)</p>
+    <%= f.simple_fields_for :bands do |event_band| %>
+      <div id="fieldsetContainer">
+        <fieldset id="0">
+          <%= event_band.input :name, label: "Band name", permitted: true %>
+          <%= event_band.input :website, label: "Band website", permitted: true %>
+        </fieldset>
+      </div>
+    <% end %>
+  </div>
+
   <%= f.submit "Edit Concert" %>
 <% end %>
   <button id="addBand">Add another band</button>
