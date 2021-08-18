@@ -15,7 +15,7 @@ class EventsController < ApplicationController
   def confirmed
     @event.confirm = true
     @event.save
-    redirect_to confirmation_events_path, notice: "Event was successfully confirmed"
+    redirect_to events_path, notice: "Event was successfully confirmed"
   end
 
   def new
@@ -28,7 +28,9 @@ class EventsController < ApplicationController
 
   def create
     # create the new event and add the current user to it
-    @event = Event.new(date: event_params[:date], price: event_params[:price], photo: event_params[:photo])
+    @event = Event.new(date: event_params[:date], price: event_params[:price],
+                      presale: event_params[:presale], organisateur: event_params[:organisateur],
+                      link: event_params[:link], photo: event_params[:photo])
     @event.user = current_user
     # calling 2 private method to check venue and band
     # associate an existing venue/band to the event or create a new one
@@ -68,7 +70,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:date, :price, :photo, :venue_id, band_ids: [], venue: [:name, :address], bands_attributes: [:id, :name])
+    params.require(:event).permit(:date, :price, :presale, :organisateur, :link, :photo, :venue_id, band_ids: [], venue: [:name, :address], bands_attributes: [:id, :name])
   end
 
   def find_event
