@@ -12,6 +12,17 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('date >= ?', Time.now.to_date) }
 
+  include PgSearch::Model
+  pg_search_scope :global_search,
+    against: [ :organisateur, :date ],
+    associated_against: {
+      venue: [ :name ],
+      bands: [ :name ]
+    },
+    using: {
+      tsearch: { prefix: true }
+    }
+
   def confirm?
     confirm
   end

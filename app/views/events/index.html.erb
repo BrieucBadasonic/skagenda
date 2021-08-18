@@ -1,4 +1,12 @@
 <div class="container">
+  <%= form_tag events_path, method: :get do %>
+    <%= text_field_tag :query,
+      params[:query],
+      class: "form-control",
+      placeholder: "Find an event by venue or band's name, date or organisateur"
+    %>
+    <%= submit_tag "Search", class: "btn btn-secondary" %>
+<% end %>
   <% @events.each do |event| %>
     <% if event.confirm? %>
       <%= render partial: "show-list", locals: {event: event}  %>

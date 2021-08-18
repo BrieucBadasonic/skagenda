@@ -1,10 +1,16 @@
 class EventsController < ApplicationController
+  after_action :verify_policy_scoped, except: [:index,:show, :new, :create], unless: :skip_pundit?
   skip_before_action :authenticate_user!, only: [:index]
   before_action :skip_authorization, only: :index
   before_action :find_event, only: [:edit, :update, :destroy, :confirmed, :update_venue]
 
   def index
-    @events = policy_scope(Event).active.order(date: :asc)
+    if params[:query].present?
+      @events = Event.global_search(params[:query])
+    else
+      @events = policy_scope(Event).active.order(date: :asc)
+    end
+    @events
   end
 
   def confirmation
