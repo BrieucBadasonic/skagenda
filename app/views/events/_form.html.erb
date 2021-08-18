@@ -12,6 +12,7 @@
   <%= f.simple_fields_for :venue do |event_venue| %>
     <%= event_venue.input :name, label: "Venue name" %>
     <%= event_venue.input :address, label: "Venue address" %>
+    <%= event_venue.input :website, label: "Venue website" %>
   <% end %>
 
   <h1>Add Band(s)</h1>
@@ -21,6 +22,7 @@
     <div id="fieldsetContainer">
       <fieldset id="0">
         <%= event_band.input :name, label: "Band name", permitted: true %>
+        <%= event_band.input :website, label: "Band website", permitted: true %>
       </fieldset>
     </div>
   <% end %>
