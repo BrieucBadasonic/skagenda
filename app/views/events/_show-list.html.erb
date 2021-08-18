@@ -6,9 +6,18 @@
     <div class="card-product-text">
       <h4><strong><%= event.date %></strong></h4>
       <% event.bands.each do |band| %>
-        <h5><%= band.name %> </h5>
+        <% if band.website %>
+          <h5><%= link_to band.name, band.website, html_options = { target: "_blank" } %></h5>
+        <% else %>
+          <h5><%= band.name %></h5>
+        <% end %>
       <% end %>
-      <p><strong><%= event.venue.name %></strong> - <%= event.venue.address %></p>
+
+      <% if event.venue.website %>
+        <p><strong><%= link_to event.venue.name, event.venue.website, html_options = { target: "_blank" } %></strong> - <%= event.venue.address %></p>
+      <% else %>
+        <p><strong><%= event.venue.name %></strong> - <%= event.venue.address %></p>
+      <% end %>
       <p><strong>Price/Presale:</strong> <%= event.price %>
       <% if event.presale %>
         / <%= event.presale %>

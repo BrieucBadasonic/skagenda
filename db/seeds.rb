@@ -25,26 +25,28 @@ puts "2 users created"
 puts "Creating 2 venues"
 
 venue1 = Venue.new(name: "Magasin 4",
-                   address: "Avenue du Port 51B, 1000 Bruxelles, Belgium")
+                   address: "Avenue du Port 51B, 1000 Bruxelles, Belgium",
+                   website: "https://www.magasin4.be/")
 venue1.save!
 
 venue2 = Venue.new(name: "SO36",
-                   address: "Oranienstraße 190, 10999 Berlin")
+                   address: "Oranienstraße 190, 10999 Berlin",
+                   website: "https://www.so36.com/tickets")
 venue2.save!
 
 puts "2 venues created"
 puts "Creating 4 bands"
 
-band1 = Band.new(name: "The Slackers")
+band1 = Band.new(name: "The Slackers", website: "https://www.theslackers.com/")
 band1.save!
 
-band2 = Band.new(name: "The Pigeons")
+band2 = Band.new(name: "The Pigeons", website: "https://www.facebook.com/thepigeons.bxl")
 band2.save!
 
-band3 = Band.new(name: "The Aggrolites")
+band3 = Band.new(name: "The Aggrolites", website: "http://www.aggroreggae.com/")
 band3.save!
 
-band4 = Band.new(name: "Crazy Baldhead")
+band4 = Band.new(name: "Crazy Baldhead", website: "https://www.facebook.com/crazybaldhead")
 band4.save!
 
 puts "4 bands created"
