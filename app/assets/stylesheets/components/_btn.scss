@@ -1,4 +1,4 @@
-.btn {
+.btn-landing {
   color: white;
   padding: 8px 24px;
   text-align: center;
@@ -12,7 +12,7 @@
   transition: 0.3s;
 }
 
-.btn:hover {
+.btn-landing:hover {
   color: black;
   background-color: white;
   border: 2px solid black;
@@ -46,4 +46,3 @@
   background-color: white;
   display: contents;
 }
-
