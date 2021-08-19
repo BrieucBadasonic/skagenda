@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   # after_action :verify_policy_scoped, except: [:index, :show, :new, :create, :confirmation, :confirmed, :edit, :update], unless: :skip_pundit?
   skip_before_action :authenticate_user!, only: [:index]
-  before_action :skip_authorization, only: [:index, :show, :new, :create, :confirmation, :confirmed, :edit, :update]
+  # before_action :skip_authorization, only: [:index, :show, :new, :create, :confirmation, :confirmed, :edit, :update]
   before_action :find_event, only: [:edit, :update, :destroy, :confirmed, :update_venue]
 
   def index

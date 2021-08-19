@@ -1,0 +1,8 @@
+<div class="container">
+  <h1>Choose the venue you want to edit</h1>
+  <ul>
+    <% @venues.each do |venue| %>
+      <li><%= link_to venue.name, edit_venue_path(venue) %></li>
+    <% end %>
+  </ul>
+</div>
