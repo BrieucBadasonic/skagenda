@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="form-title">
+    <h1>Choose the band you want to edit</h1>
+  </div>
+  <ul>
+    <% @bands.each do |band| %>
+      <li><%= link_to band.name, edit_band_path(band) %></li>
+    <% end %>
+  </ul>
+</div>

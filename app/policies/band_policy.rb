@@ -4,7 +4,12 @@ class BandPolicy < ApplicationPolicy
       scope.all
     end
   end
+
   def create?
     true
+  end
+
+  def update?
+    user.admin
   end
 end
