@@ -1,5 +1,7 @@
 <div class="container">
-  <h1>Choose the venue you want to edit</h1>
+  <div class="form-title">
+    <h1>Choose the venue you want to edit</h1>
+  </div>
   <ul>
     <% @venues.each do |venue| %>
       <li><%= link_to venue.name, edit_venue_path(venue) %></li>

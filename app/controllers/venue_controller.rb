@@ -1,6 +1,6 @@
 class VenueController < ApplicationController
   def index
-    @venues = policy_scope(Venue).order(created_at: :desc)
+    @venues = policy_scope(Venue).order(name: :asc)
   end
 
   def edit
