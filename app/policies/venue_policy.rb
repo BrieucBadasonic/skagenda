@@ -10,6 +10,6 @@ class VenuePolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    user.admin
   end
 end

@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="form-venue">
+      <h1 class="form-title">Edit <%= @venue.name %></h1>
+      <%= simple_form_for @venue do |f| %>
+        <%= f.input :name, label: "Venue name" %>
+        <%= f.input :address, label: "Venue address" %>
+        <%= f.input :website, label: "Venue website" %>
+        <%= f.submit %>
+      <% end %>
+  </div>
+</div>
